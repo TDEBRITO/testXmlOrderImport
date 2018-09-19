@@ -1,0 +1,77 @@
+{% extends 'layout.html.twig' %}
+
+{% block body %}
+    <div id="content">
+        <div class="container">
+            <div class="row bar">
+                <div id="customer-order" class="col-lg-9">
+                    <div class="box">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th colspan="2" class="border-top-0">Product</th>
+                                    <th class="border-top-0">Quantity</th>
+                                    <th class="border-top-0">Unit price</th>
+                                    <th class="border-top-0">Discount</th>
+                                    <th class="border-top-0">Total</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for product in order.products %}
+                                    <tr>
+                                        <td><a href="#"><img src="https://via.placeholder.com/500x500" alt="#" class="img-fluid"></a></td>
+                                        <td><a href="#">{{ product.title }}</a></td>
+                                        <td>1</td>
+                                        <td>{{ product.price|currency(order.currency,currencyFilter) }}</td>
+                                        <td>0.00 </td>
+                                        <td>{{ product.price|currency(order.currency,currencyFilter) }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <th colspan="5" class="text-right">Order subtotal</th>
+                                    <th>{{ order.total|currency(order.currency,currencyFilter) }}</th>
+                                </tr>
+                                <tr>
+                                    <th colspan="5" class="text-right">Total</th>
+                                    <th>{{ order.total|currency(order.currency,currencyFilter) }}</th>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <div class="row addresses">
+                            <div class="col-md-6 text-right">
+                                <h3 class="text-uppercase">Invoice address</h3>
+                                <p>Thais DB<br>
+                                    121 Route de st fortunat<br>
+                                    69450<br>
+                                    Saint Cyr au Mont d'Or<br>
+                                    France</p>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <h3 class="text-uppercase">Shipping address</h3>
+                                <p>Thais DB<br>
+                                    121 Route de st fortunat<br>
+                                    69450<br>
+                                    Saint Cyr au Mont d'Or<br>
+                                    France</p>
+                            </div>
+                        </div>
+                        <div class="box-footer d-flex justify-content-between align-items-center">
+                            {% if currencyFilter == order.currency.exchangeCurrency %}
+                                {% set currency = order.currency.currencyCode %}
+                            {% else %}
+                                {% set currency = order.currency.exchangeCurrency %}
+                            {% endif %}
+
+                            <div><a href="{{ path('customer_order_view_currency',{'id': order.id, 'currencyFilter': currency }) }}" class="btn btn-template-outlined mt-0">See in {{ currency }}</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

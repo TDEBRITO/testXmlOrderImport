@@ -44,6 +44,7 @@ You now need to install the project
     
     Install the project
     - composer install
+    - bin/console doctrine:schema:create
   
     * If you have no error, the project is running on 127.0.0.1 or feeluniquetest.local (add it to your hosts file)
  
